@@ -13,7 +13,14 @@
       <CustomRadio name="drink" value="Coffee" v-model="drink" v-bind="drinkAttrs"
         >Coffee</CustomRadio
       >
-
+      <CustomCheckbox name="food" value="" v-model="food" v-bind="foodAttrs">None</CustomCheckbox>
+      <CustomCheckbox name="food" value="pizza" v-model="food" v-bind="foodAttrs"
+        >Pizza</CustomCheckbox
+      >
+      <CustomCheckbox name="food" value="rice" v-model="food" v-bind="foodAttrs"
+        >Rice</CustomCheckbox
+      >
+      {{ values }}
       <span>제출 횟수 : {{ submitCount }}</span>
       <button :disabled="!meta.valid || isSubmitting">
         {{ isSubmitting ? 'Submitting...' : 'Submit' }}
@@ -34,10 +41,12 @@ import * as yup from 'yup'
 const schema = yup.object({
   email: yup.string().required().email(),
   password: yup.string().min(8).required(),
-  drink: yup.string().required()
+  drink: yup.string().required(),
+  food: yup.array()
 })
 
 const {
+  values,
   defineField,
   errors,
   handleSubmit,
@@ -56,6 +65,7 @@ const {
 const [email, emailAttrs] = defineField('email')
 const [password, passwordAttrs] = defineField('password')
 const [drink, drinkAttrs] = defineField('drink')
+const [food, foodAttrs] = defineField('food')
 
 // 만약 제출을 한 후 유효한지 체크해야 한다면?
 // handleSubmit의 두 번째 인자로 실패했을 때 함수를 넣어줌
