@@ -1,6 +1,6 @@
 <template>
   <main>
-    <form @submit="onSubmit">
+    <form @submit="onSubmit()">
       <CustomInput v-model="email" v-bind="emailAttrs" :error="errors.email" type="text" />
       <CustomInput
         v-model="password"
@@ -8,6 +8,11 @@
         :error="errors.password"
         type="password"
       />
+      <CustomRadio name="drink" value="" v-model="drink" v-bind="drinkAttrs">None</CustomRadio>
+      <CustomRadio name="drink" value="Tea" v-model="drink" v-bind="drinkAttrs">Tea</CustomRadio>
+      <CustomRadio name="drink" value="Coffee" v-model="drink" v-bind="drinkAttrs"
+        >Coffee</CustomRadio
+      >
 
       <span>제출 횟수 : {{ submitCount }}</span>
       <button :disabled="!meta.valid || isSubmitting">
@@ -21,12 +26,15 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import CustomInput from '@/components/ui/CustomInput.vue'
+import CustomRadio from '@/components/ui/CustomRadio.vue'
+import CustomCheckbox from '@/components/ui/CustomCheckbox.vue'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 const schema = yup.object({
   email: yup.string().required().email(),
-  password: yup.string().min(8).required()
+  password: yup.string().min(8).required(),
+  drink: yup.string().required()
 })
 
 const {
@@ -42,15 +50,12 @@ const {
   setErrors,
   setValues
 } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    email: '',
-    password: ''
-  }
+  validationSchema: schema
 })
 
 const [email, emailAttrs] = defineField('email')
 const [password, passwordAttrs] = defineField('password')
+const [drink, drinkAttrs] = defineField('drink')
 
 // 만약 제출을 한 후 유효한지 체크해야 한다면?
 // handleSubmit의 두 번째 인자로 실패했을 때 함수를 넣어줌

@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <label>
     <input
+      type="radio"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="$emit('blur')"
       v-bind="$attrs"
     />
-    <span class="error-message">{{ error }}</span>
-  </div>
+    <span><slot></slot></span>
+  </label>
 </template>
 <script lang="ts" setup>
 const props = defineProps({
-  error: String,
   modelValue: String
 })
 
