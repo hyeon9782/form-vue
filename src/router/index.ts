@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/vee-validate',
+      name: 'vee-validate',
+      component: () => import('@/views/VeeValidateView.vue')
     }
   ]
 })
