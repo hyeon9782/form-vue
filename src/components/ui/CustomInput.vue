@@ -4,6 +4,7 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="$emit('blur')"
+      v-bind="$attrs"
     />
     <span>{{ error }}</span>
   </div>
